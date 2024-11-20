@@ -53,5 +53,5 @@ jobs:
       - name: "Copy project and run"
         run: |
           scp -o StrictHostKeyChecking=no -i private.key ./http.js ubuntu@${EC2_PUBLIC_IP}:/home/ubuntu/
-          ssh -o StrictHostKeyChecking=no -i private.key ubuntu@${EC2_PUBLIC_IP} [[ ! -z $(ps -ef | grep "node") ]] && killall node
+          ssh -o StrictHostKeyChecking=no -i private.key ubuntu@${EC2_PUBLIC_IP} [[ ! -z $(ps | grep "node") ]] && killall node
           ssh -o StrictHostKeyChecking=no -i private.key ubuntu@${EC2_PUBLIC_IP} node http.js &
