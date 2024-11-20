@@ -29,6 +29,12 @@ resource "aws_instance" "test" {
   instance_type = "t2.micro"
   associate_public_ip_address = true
 
+  user_data = <<EOF
+#!/bin/bash
+sudo apt update
+sudo apt install nodejs npm
+EOF
+
 }
 
 output "deployed_public_ip" {
