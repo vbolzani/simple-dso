@@ -1,20 +1,18 @@
-name: "EC2 deploy with Terraform"
+name: "Destroy Terraform cloud infraestructure"
 on:
-  push:
-    branches:
-      - main 
-    paths-ignore:
-      - '*.md'
-  pull_request:
-    paths-ignore:
-      - '*.md'
-
-env:
-  HELLO_WORLD: "Hello world"
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        type: choice
+        description: Are you sure you want to destroy current infraestructure?
+        options:
+          - Yes
+          - No
 
 jobs:
-  plan:
+  terraform_destroy:
     name: Terraform deploy
+    if: ${{ github.event.inputs.action == 'Yes' }}
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout (bring code to this VM)"
@@ -34,5 +32,4 @@ jobs:
         run:  |
           cd terraform
           terraform init
-          terraform plan
-          terraform apply -auto-approve
+          terraform destroy -auto-approve
