@@ -44,7 +44,7 @@ jobs:
           echo "$EC2_PRIVATE_KEY" > private.key
           sudo chmod 600 private.key
         env:
-          EC2_PRIVATE_KEY: ${{secrets.EC2_PRIVATE_KEY}}
+          EC2_PRIVATE_KEY: ${{secrets.EC2_SECRET_KEY}}
 
       #- name: "Waiting 30s for EC2 to finish startup"
       #  run: |
