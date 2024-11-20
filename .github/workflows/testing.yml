@@ -23,6 +23,13 @@ jobs:
       - name: "Setup terraform"
         uses: hashicorp/setup-terraform@v3
 
+      - name: "Setup AWS credentials"
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+
       - name: "Terraform deploy"
         run:  |
           cd terraform
