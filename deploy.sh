@@ -8,7 +8,4 @@ else
     echo "Node process not found..."
 fi
 
-node http.js &
-echo "Node process launched..."
-
-exit
+nohup node http.js > node_run.out 2> node_error.log < /dev/null &
