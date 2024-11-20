@@ -23,5 +23,6 @@ jobs:
       - name: "Terraform deploy"
         run:  |
           cd terraform
+          touch key.pub
           terraform init
           terraform destroy -auto-approve
