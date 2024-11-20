@@ -1,10 +1,11 @@
 #!/bin/bash
 
-if [ ! -z $(ps -ef | grep "node") ]
+if [ ! -z "$(ps -ef | grep "node")" ]
 then
     echo "Node process found in target VM. Killing it..."
     killall node
 else
     echo "Node process not found..."
+fi
 
-node http.js & 
+node http.js &
