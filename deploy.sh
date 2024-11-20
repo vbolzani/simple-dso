@@ -10,3 +10,5 @@ fi
 
 node http.js &
 echo "Node process launched..."
+
+exit

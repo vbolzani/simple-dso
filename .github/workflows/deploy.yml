@@ -61,4 +61,4 @@ jobs:
           
       - name: "Executing deploying script"
         run: |
-          ssh -o StrictHostKeyChecking=no -i private.key ubuntu@${EC2_PUBLIC_IP} source /home/ubuntu/deploy.sh
+          ssh -o StrictHostKeyChecking=no -i private.key ubuntu@${EC2_PUBLIC_IP} /home/ubuntu/deploy.sh
