@@ -19,8 +19,8 @@ data "aws_ami" "ubuntu" {
     owners = ["099720109477"]
 }
 
-resource "aws_key_pair" "deployer" {
-  key_name   = "ubuntu"
+resource "aws_key_pair" "github-deployer" {
+  key_name   = "github-deployer"
   public_key = file("key.pub")
 }
 
@@ -60,7 +60,9 @@ resource "aws_instance" "test" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   associate_public_ip_address = true
+  key_name        = aws_key_pair.github-deployer.key_name
   vpc_security_group_ids = [aws_security_group.juice-shop-sg.id]
+
 
   user_data = <<EOF
 #!/bin/bash

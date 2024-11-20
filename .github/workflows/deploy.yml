@@ -41,6 +41,10 @@ jobs:
           EC2_PUBLIC_IP=$(terraform output -raw deployed_public_ip)
           echo "EC2_PUBLIC_IP=$EC2_PUBLIC_IP" >> $GITHUB_ENV
 
+      - name: "Waiting 30s for EC2 to finish startup"
+        run: |
+          sleep 30s
+
       - name: "Copy project and run"
         run: |
           scp -o StrictHostKeyChecking=no -i terraform/key ./http.js ubuntu@${EC2_PUBLIC_IP}:/home/ubuntu/
