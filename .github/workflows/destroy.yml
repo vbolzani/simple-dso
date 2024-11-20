@@ -1,18 +1,10 @@
 name: "Destroy Terraform cloud infraestructure"
 on:
   workflow_dispatch:
-    inputs:
-      confirmation:
-        type: choice
-        description: Are you sure you want to destroy current infraestructure?
-        options:
-          - Yes
-          - No
 
 jobs:
   terraform_destroy:
     name: Terraform deploy
-    if: ${{ github.event.inputs.action == 'Yes' }}
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout (bring code to this VM)"
