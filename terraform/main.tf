@@ -60,8 +60,7 @@ resource "aws_instance" "test" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   associate_public_ip_address = true
-  
-
+  vpc_security_group_ids = [aws_security_group.juice-shop-sg1.id]
 
   user_data = <<EOF
 #!/bin/bash
