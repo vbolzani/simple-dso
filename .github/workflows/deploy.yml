@@ -31,7 +31,7 @@ jobs:
 
       - name: "Generate ephemeral keypair"
         run: |
-          ssh-keygen -t ed25519 -C "deployer" -f terraform/key
+          ssh-keygen -t ed25519 -C "ubuntu" -f terraform/key
 
       - name: "Terraform deploy EC2"
         run:  |
