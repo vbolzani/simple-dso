@@ -23,6 +23,5 @@ jobs:
       - name: "Terraform deploy"
         run:  |
           cd terraform
-          touch key.pub
           terraform init
-          terraform destroy -auto-approve
+          terraform destroy -auto-approve -var="EC2_PUBLIC_KEY=test"
