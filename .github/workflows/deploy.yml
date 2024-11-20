@@ -43,5 +43,5 @@ jobs:
 
       - name: "Copy project and run"
         run: |
-          scp 
-          ssh -i terraform/key ubuntu@${EC2_PUBLIC_IP} nohup node http.js & 
+          scp -i terraform/key ./http.js ubuntu@${EC2_PUBLIC_IP}:/home/ubuntu/
+          ssh -i terraform/key ubuntu@${EC2_PUBLIC_IP} nohup node http.js &
