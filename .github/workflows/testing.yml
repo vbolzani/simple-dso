@@ -1,0 +1,20 @@
+name: "Testing..."
+on:
+  push:
+    branches:
+      - main 
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+
+env:
+  HELLO_WORLD: "Hello world"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Test"
+        run: "echo $HELLO_WORLD"
