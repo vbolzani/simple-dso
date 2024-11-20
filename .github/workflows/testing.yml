@@ -1,4 +1,4 @@
-name: "Testing..."
+name: "EC2 deploy with Terraform"
 on:
   push:
     branches:
@@ -13,8 +13,18 @@ env:
   HELLO_WORLD: "Hello world"
 
 jobs:
-  lint:
+  plan:
+    name: Terraform plan
     runs-on: ubuntu-latest
     steps:
-      - name: "Test"
-        run: "echo $HELLO_WORLD"
+      - name: "Checkout (bring code to this VM)"
+        uses: actions/checkout@v3
+      
+      - name: "Setup terraform"
+        uses: hashicorp/setup-terraform@v3
+
+      - name: "Terraform deploy"
+        run:  |
+          cd terraform
+          terraform init
+          terraform plan
