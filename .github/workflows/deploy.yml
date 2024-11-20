@@ -38,11 +38,9 @@ jobs:
           cd terraform
           terraform init
           terraform apply -auto-approve
-          EC2_PUBLIC_IP=$(terraform output deployed_public_ip)
+          EC2_PUBLIC_IP=$(terraform output -raw deployed_public_ip)
           echo "EC2_PUBLIC_IP=$EC2_PUBLIC_IP" >> $GITHUB_ENV
 
-      - name: "Print public IP"
+      - name: "access instance"
         run: |
-          echo $EC2_PUBLIC_IP
-          EC2_PUBLIC_IP=$EC2_PUBLIC_IP
-          ssh ubuntu@${EC2_PUBLIC_IP}
+          ssh -i terraform/key ubuntu@${EC2_PUBLIC_IP} -f 'ifconfig'
