@@ -20,8 +20,8 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_key_pair" "deployer" {
-  key_name   = deployer
-  public_key = file("key")
+  key_name   = "deployer"
+  public_key = file("key.pub")
 }
 
 resource "aws_instance" "test" {
