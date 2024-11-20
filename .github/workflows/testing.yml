@@ -36,3 +36,8 @@ jobs:
           terraform init
           terraform plan
           terraform apply -auto-approve
+          public_ip=$(terraform output deployed_public_ip)
+
+      - name: "Print public IP"
+        run: |
+          echo $public_ip
