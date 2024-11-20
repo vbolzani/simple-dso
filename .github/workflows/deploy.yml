@@ -29,10 +29,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
 
-      - name: "Generate ephemeral keypair"
-        run: |
-          ssh-keygen -t ed25519 -C "ubuntu" -f terraform/key
-
       - name: "Terraform deploy EC2"
         run:  |
           cd terraform
@@ -40,6 +36,15 @@ jobs:
           terraform apply -auto-approve
           EC2_PUBLIC_IP=$(terraform output -raw deployed_public_ip)
           echo "EC2_PUBLIC_IP=$EC2_PUBLIC_IP" >> $GITHUB_ENV
+        env:
+          EC2_PUBLIC_KEY: ${{ secrets.EC2_PUBLIC_KEY }} 
+
+      - name: Setup SSH key
+        run: |
+          echo "$EC2_PRIVATE_KEY" > private.key
+          sudo chmod 600 private.key
+        env:
+          EC2_PRIVATE_KEY: ${{secrets.EC2_PRIVATE_KEY}}
 
       - name: "Waiting 30s for EC2 to finish startup"
         run: |
@@ -47,5 +52,5 @@ jobs:
 
       - name: "Copy project and run"
         run: |
-          scp -o StrictHostKeyChecking=no -i terraform/key ./http.js ubuntu@${EC2_PUBLIC_IP}:/home/ubuntu/
-          ssh -o StrictHostKeyChecking=no -i terraform/key ubuntu@${EC2_PUBLIC_IP} nohup node http.js &
+          scp -o StrictHostKeyChecking=no -i private.key ./http.js ubuntu@${EC2_PUBLIC_IP}:/home/ubuntu/
+          ssh -o StrictHostKeyChecking=no -i private.key ubuntu@${EC2_PUBLIC_IP} nohup node http.js &

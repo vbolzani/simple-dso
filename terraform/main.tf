@@ -19,9 +19,13 @@ data "aws_ami" "ubuntu" {
     owners = ["099720109477"]
 }
 
+variable "EC2_PUBLIC_KEY" {
+  type = string
+}
+
 resource "aws_key_pair" "github-deployer" {
   key_name   = "github-deployer"
-  public_key = file("key.pub")
+  public_key = var.EC2_PUBLIC_KEY
 }
 
 data "aws_vpc" "default" {
@@ -67,7 +71,7 @@ resource "aws_instance" "test" {
   user_data = <<EOF
 #!/bin/bash
 sudo apt update
-sudo apt install nodejs npm
+sudo apt install -y nodejs npm
 EOF
 
 }
