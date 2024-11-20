@@ -24,10 +24,44 @@ resource "aws_key_pair" "deployer" {
   public_key = file("key.pub")
 }
 
+data "aws_vpc" "default" {
+ default = true
+}
+
+resource "aws_security_group" "juice-shop-sg" {
+  name        = "juiceshop-security-group"
+  description = "Allow 8080 and 22"
+
+  ingress {
+    description = "SSH ingress"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTP ingress"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+ }
+}
+
 resource "aws_instance" "test" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   associate_public_ip_address = true
+  
+
 
   user_data = <<EOF
 #!/bin/bash
