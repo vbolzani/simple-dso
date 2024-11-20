@@ -43,6 +43,7 @@ jobs:
         run: |
           echo "$EC2_PRIVATE_KEY" > private.key
           sudo chmod 600 private.key
+          dos2unix ~/.ssh/id_rsa
         env:
           EC2_PRIVATE_KEY: ${{secrets.EC2_PRIVATE_KEY}}
 
