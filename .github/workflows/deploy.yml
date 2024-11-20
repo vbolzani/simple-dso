@@ -9,9 +9,6 @@ on:
     paths-ignore:
       - '*.md'
 
-env:
-  HELLO_WORLD: "Hello world"
-
 jobs:
   plan:
     name: Terraform deploy
@@ -22,6 +19,8 @@ jobs:
       
       - name: "Setup terraform"
         uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
 
       - name: "Setup AWS credentials"
         uses: aws-actions/configure-aws-credentials@v4.0.2
