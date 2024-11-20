@@ -35,8 +35,9 @@ jobs:
           terraform init
           terraform plan
           terraform apply -auto-approve
-          public_ip=$(terraform output deployed_public_ip)
+          EC2_PUBLIC_IP=$(terraform output deployed_public_ip)
+          echo "EC2_PUBLIC_IP=$EC2_PUBLIC_IP" >> $GITHUB_ENV
 
       - name: "Print public IP"
         run: |
-          echo $public_ip
+          echo $EC2_PUBLIC_IP
