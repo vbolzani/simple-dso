@@ -43,4 +43,4 @@ jobs:
 
       - name: "Access instance and print ifconfig"
         run: |
-          ssh -i terraform/key ubuntu@$EC2_PUBLIC_IP -f 'ifconfig'
+          ssh -i terraform/key ubuntu@${EC2_PUBLIC_IP} -f 'ifconfig'
