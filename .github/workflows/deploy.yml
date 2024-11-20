@@ -29,11 +29,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
 
-      - name: "Terraform deploy"
+      - name: "Generate ephemeral keypair"
+        run: |
+          ssh-keygen -t ed25519 -C "deployer" -f terraform/key
+
+      - name: "Terraform deploy EC2"
         run:  |
           cd terraform
           terraform init
-          terraform plan
           terraform apply -auto-approve
           EC2_PUBLIC_IP=$(terraform output deployed_public_ip)
           echo "EC2_PUBLIC_IP=$EC2_PUBLIC_IP" >> $GITHUB_ENV

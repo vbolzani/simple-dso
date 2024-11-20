@@ -19,9 +19,16 @@ data "aws_ami" "ubuntu" {
     owners = ["099720109477"]
 }
 
+resource "aws_key_pair" "deployer" {
+  key_name   = deployer
+  public_key = file("key")
+}
+
 resource "aws_instance" "test" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
+  associate_public_ip_address = true
+
 }
 
 output "deployed_public_ip" {
