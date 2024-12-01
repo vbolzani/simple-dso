@@ -1,10 +1,12 @@
-name: "Manual destroy deployed infraestructure"
+name: "Destroy deployed infraestructure"
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0,30 * * * *"
 
 jobs:
   terraform_destroy:
-    name: Terraform deploy
+    name: Terraform destroy
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout (bring code to this VM)"
@@ -20,7 +22,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
 
-      - name: "Terraform deploy"
+      - name: "Terraform destroy"
         run:  |
           cd terraform
           terraform init
