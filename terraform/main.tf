@@ -33,7 +33,7 @@ data "aws_vpc" "default" {
 }
 
 resource "aws_security_group" "juice-shop-sg" {
-  name        = "juiceshop-security-group"
+  name        = "asd-security-group"
   description = "Allow 8080 and 22"
 
   ingress {
