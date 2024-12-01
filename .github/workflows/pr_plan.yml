@@ -30,9 +30,11 @@ jobs:
         run:  |
           cd terraform
           terraform init
-          terraform plan -lock=false -out terraform.plan
+          terraform plan -var="EC2_PUBLIC_KEY==${EC2_PUBLIC_KEY}" -lock=false -out terraform.plan
           terraform show -no-color terraform.plan > terraform.text
           terraform show -json terraform.plan > terraform.json
+        env:
+          EC2_PUBLIC_KEY: ${{ secrets.EC2_PUBLIC_KEY }}
 
       - name: "Post plan comment"
         uses: ahmadnassri/action-terraform-report@v4
