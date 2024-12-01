@@ -32,8 +32,8 @@ data "aws_vpc" "default" {
  default = true
 }
 
-resource "aws_security_group" "juice-shop-sg" {
-  name        = "juiceshop-security-group"
+resource "aws_security_group" "generic-security-group" {
+  name        = "generic-security-group"
   description = "Allow 8080 and 22"
 
   ingress {
@@ -65,7 +65,7 @@ resource "aws_instance" "test" {
   instance_type = "t2.micro"
   associate_public_ip_address = true
   key_name        = aws_key_pair.github-deployer.key_name
-  vpc_security_group_ids = [aws_security_group.juice-shop-sg.id]
+  vpc_security_group_ids = [aws_security_group.generic-security-group.id]
 
 
   user_data = <<EOF
