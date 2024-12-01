@@ -24,7 +24,7 @@ variable "EC2_PUBLIC_KEY" {
 }
 
 resource "aws_key_pair" "github-deployer" {
-  key_name   = "github-deployer"
+  key_name   = "github-deploy"
   public_key = var.EC2_PUBLIC_KEY
 }
 
