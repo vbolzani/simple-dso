@@ -14,6 +14,9 @@ jobs:
     name: App deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Waiting user data
+        run: sleep 30s
+
       - name: "Checkout (bring code to this VM)"
         uses: actions/checkout@v3
       
