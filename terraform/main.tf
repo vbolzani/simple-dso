@@ -23,8 +23,8 @@ variable "EC2_PUBLIC_KEY" {
   type = string
 }
 
-resource "aws_key_pair" "github-deployer" {
-  key_name   = "github-deploy"
+resource "aws_key_pair" "ubuntu-cicd" {
+  key_name   = "ubuntu-cicd"
   public_key = var.EC2_PUBLIC_KEY
 }
 
@@ -64,7 +64,7 @@ resource "aws_instance" "test1" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   associate_public_ip_address = true
-  key_name        = aws_key_pair.github-deployer.key_name
+  key_name        = aws_key_pair.ubuntu-cicd.key_name
   vpc_security_group_ids = [aws_security_group.too-open-security-group.id]
 
 
