@@ -32,8 +32,8 @@ data "aws_vpc" "default" {
  default = true
 }
 
-resource "aws_security_group" "too-open-security-group" {
-  name        = "too-open-security-group"
+resource "aws_security_group" "default-access" {
+  name        = "default-access"
   description = "Allow 8080 and 22"
 
   ingress {
@@ -65,7 +65,7 @@ resource "aws_instance" "test1" {
   instance_type = "t2.micro"
   associate_public_ip_address = true
   key_name        = aws_key_pair.ubuntu-cicd.key_name
-  vpc_security_group_ids = [aws_security_group.too-open-security-group.id]
+  vpc_security_group_ids = [aws_security_group.default-access.id]
 
 
   user_data = <<EOF
