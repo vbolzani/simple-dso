@@ -76,6 +76,22 @@ EOF
 
 }
 
+resource "aws_instance" "test1" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  associate_public_ip_address = true
+  key_name        = aws_key_pair.ubuntu-cicd.key_name
+  vpc_security_group_ids = [aws_security_group.default-access.id]
+
+
+  user_data = <<EOF
+#!/bin/bash
+sudo apt update
+sudo apt install -y nodejs npm
+EOF
+
+}
+
 output "deployed_public_ip" {
     value = aws_instance.test.public_ip
 }
